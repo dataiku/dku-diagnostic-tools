@@ -12,6 +12,7 @@ public class Config {
         
         public Integer stopAfterRows;
         public boolean readColumns;
+	public int maxRows = 0;
         public int runsPerConnection = 2;
         public int connectionRuns = 2;
     }

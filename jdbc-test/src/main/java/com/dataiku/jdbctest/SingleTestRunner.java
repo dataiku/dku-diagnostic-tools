@@ -40,11 +40,13 @@ public class SingleTestRunner {
                 if (test.prepared) {
 
                     try (PreparedStatement ps = conn.prepareStatement(test.query)) {
-                        logger.info("Statement prepared");
+                        logger.info("Statement prepared maxRows=" + test.maxRows);
 
                         if (test.fetchSize != null) {
+			    logger.info("Set fetch size" + test.fetchSize);
                             ps.setFetchSize(test.fetchSize);
                         }
+                        ps.setMaxRows(test.maxRows);
                         ps.execute();
                         logger.info("Statement executed");
                         ResultSet rs = ps.getResultSet();
@@ -56,11 +58,13 @@ public class SingleTestRunner {
 
                 } else {
                     try (Statement ps = conn.createStatement()) {
-                        logger.info("Statement prepared");
+                        logger.info("Statement created maxRows=" + test.maxRows);
 
                         if (test.fetchSize != null) {
+			    logger.info("set fetch size " + test.fetchSize);
                             ps.setFetchSize(test.fetchSize);
                         }
+                        ps.setMaxRows(test.maxRows);
                         ps.execute(test.query);
                         logger.info("Statement executed");
                         ResultSet rs = ps.getResultSet();

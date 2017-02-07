@@ -27,9 +27,15 @@ public class Main {
         Config config = gson.fromJson(FileUtils.readFileToString(new File(configFile), "utf8"), Config.class);
         
         ConnectionFactory cf = new ConnectionFactory().withSettings(config.connection);;
+        
+        BackgroundDiagnostics bd = new BackgroundDiagnostics();
+        bd.start();
+        
         for (RetrievedQueryTest test : config.tests) {
             SingleTestRunner str = new SingleTestRunner(test, cf);
             str.run();
         }
+        
+        bd.finish();
     }
 }
